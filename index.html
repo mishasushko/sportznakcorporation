@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPORTCORP</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #111;
+            color: #ddd;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        /* Стили для ссылок */
+        a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        /* Стили для header */
+        header {
+            background-color: #000;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('noise.gif'); /* Замените на изображение шума */
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 4em;
+            letter-spacing: -3px;
+            text-shadow: 3px 3px 5px #000;
+            animation: glitch 0.5s steps(2, end) infinite;
+        }
+
+        #logo {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            border: 2px dashed #555;
+            animation: glitch 0.7s steps(2, end) infinite; /* Удалили rotate 10s linear infinite */
+            background-image: url('logo.png'); /* Замените на путь к вашему логотипу */
+            background-size: cover;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(5px, -5px); }
+            60% { transform: translate(-3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Стили для навигации */
+        nav {
+            margin-top: 40px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            border-top: 1px dashed #444;
+            border-bottom: 1px dashed #444;
+            padding: 10px 0;
+        }
+
+        nav li {
+            margin: 0 20px;
+            position: relative;
+        }
+
+        nav li::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            width: 5px;
+            height: 5px;
+            background-color: #555;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Стили для основного контента */
+        main {
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('scanlines.png'); /* Замените на изображение шума */
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        p {
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* Стили для секций */
+        #about, #research, #jobs, #archives {
+            background-color: #222;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid #444;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            display: none; /* Скрываем все по умолчанию */
+        }
+
+         #about {
+            display: block; /* Отображаем секцию "О нас" по умолчанию */
+         }
+
+          #research {
+           /* display: block;  Отображаем секцию "Научные разработки" по умолчанию  */
+         }
+
+        #about::before, #research::before, #jobs::before, #archives::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('grain.png'); /* Замените на изображение зернистости */
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        #about h2, #research h2, #jobs h2, #archives h2 {
+            color: #f44;
+            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        /* Стили для архивов */
+        #archives ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #archives li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        #archives li::before {
+            content: '\25BA'; /* Стрелка Unicode */
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #666;
+        }
+
+        #archives a {
+            color: #bbb;
+            display: block;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #archives a:hover {
+            background-color: #444;
+            color: #fff;
+        }
+
+        #archives .warning {
+            color: #fdd;
+            font-size: 0.9em;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* Стили для формы логина */
+        .login-form {
+            display: none;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            background-color: #444;
+            color: #ddd;
+            border-radius: 3px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-form button {
+            background-color: #555;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #666;
+        }
+
+        /* Стили для audio */
+        audio {
+            width: 100%;
+            margin-top: 15px;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+
+        /* Стили для textarea и select (если необходимо) */
+        textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #555;
+            background-color: #333;
+            color: #ddd;
+            border-radius: 3px;
+        }
+
+        /* Дополнительные стили */
+        .restricted {
+            color: #f44;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .handwritten {
+            font-family: 'Shadows Into Light', cursive; /* Другой рукописный шрифт */
+            font-style: italic;
+            color: #ddd;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* Стили для footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #777;
+            border-top: 2px solid #333;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('noise.gif'); /* Замените на изображение шума */
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SPORTCORP</h1>
+        <div id="logo"></div>
+        <p>Мы раздвигаем границы того, что вы считаете реальностью.</p>
+    </header>
+
+    <main>
+        <p>С 1985 года SportCorp ведет передовые исследования и разработки в области инноваций. Расположенная в уединенной, живописной деревне СПК «Спортзнак», наша компания гордится своим вкладом в прогресс.</p>
+
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('about')">О На...с?</a></li>
+                <li><a href="#" onclick="showSection('research')">Научные разработки</a></li>
+                <li><a href="#" onclick="showSection('jobs')">Вакансии</a></li>
+                <li><a href="#" onclick="showSection('archives')">Архивы (Секция для избранных)</a></li>
+            </ul>
+        </nav>
+
+        <section id="about">
+            <h2>О На...с?</h2>
+            <p>SportCorp - это организация, посвященная <span class="restricted">изучению</span> <span class="restricted">██████████████</span>. С момента своего основания в 1985 году, наша миссия оставалась неизменной: <span class="restricted">██████████████</span> и расширение границ понимания.
+            </p>
+            <p>
+                Мы расположены в живописной, но уединенной деревне СПК «Спортзнак». Наше местоположение обеспечивает <span class="restricted">уникальные возможности</span> <span class="restricted">██████████████</span>.
+            </p>
+
+            <p>
+                <strong>Основные направления деятельности:</strong>
+            </p>
+
+            <ul>
+                <li><span class="restricted">Исследования в области биологии и биоинженерии</span> - <span class="restricted">[ДАННЫЕ УДАЛЕНЫ]</span></li>
+                <li><span class="restricted">Разработка инновационных технологий</span> - <span class="restricted">[ДАННЫЕ ЗАСЕКРЕЧЕНЫ]</span></li>
+                <li><span class="restricted">Сотрудничество с ведущими научными учреждениями</span> - <span class="restricted">[ИМЕНА УДАЛЕНЫ]</span></li>
+            </ul>
+
+            <p>
+                Мы гордимся тем, что <span class="restricted">вносим вклад в научный прогресс</span>, хотя некоторые наши методы могут показаться... <span class="handwritten">нетрадиционными</span>.
+            </p>
+
+            <p>
+                <span class="handwritten">"В SportCorp мы верим в то, что невозможное возможно, если достаточно сильно <span class="restricted">██████████████</span>."</span> - <span class="restricted">[Имя удалено]</span>, <span class="restricted">[Должность удалена]</span>.
+            </p>
+
+            <p style="font-size: 0.8em; color: #aaa;">
+                <strong>Примечание:</strong>  Некоторые материалы на этой странице могут быть подвергнуты цензуре в целях сохранения <span class="restricted">██████████████</span>.
+            </p>
+        </section>
+
+        <section id="research">
+            <h2>Научные разработки</h2>
+            <div id="research-login-form" class="login-form">
+                <label for="username-research">Логин:</label>
+                <input type="text" id="username-research" name="username-research" class="login-input">
+                <label for="password-research">Пароль:</label>
+                <input type="password" id="password-research" name="password-research" class="login-input">
+                <button onclick="loginResearch()" class="login-button">Войти</button>
+                <p id="login-message-research" style="color: red;"></p>
+            </div>
+
+            <p style="display: none;">Наша исследовательская деятельность охватывает широкий спектр дисциплин, от <span class="restricted">прикладной биологии</span> до <span class="restricted">██████████████</span>.
+            </p>
+
+            <p style="display: none;">
+                <strong>Текущие проекты:</strong>
+            </p>
+
+            <ul style="display: none;">
+                <li><span class="restricted">Проект "Химера"</span> - <span class="restricted">[УРОВЕНЬ ДОСТУПА: ОМЕГА]</span></li>
+                <li><span class="restricted">Изучение аномальных явлений в районе СПК «Спортзнак»</span> - <span class="restricted">[ТРЕБУЕТСЯ ПОДТВЕРЖДЕНИЕ]</span></li>
+                <li><span class="restricted">Разработка ██████████████ на основе ██████████████</span> - <span class="restricted">[ЭКСПЕРИМЕНТАЛЬНАЯ СТАДИЯ]</span></li>
+            </ul>
+
+            <p style="display: none;">
+                Внимание!  Доступ к детальной информации о проектах разрешен только авторизованному персоналу.  Несанкционированный доступ преследуется в соответствии с <span class="restricted">[ПРОТОКОЛ 77-А]</span>.
+            </p>
+
+            <p style="font-size: 0.8em; color: #aaa; display: none;">
+                <strong>Примечание:</strong>  Информация на этой странице может быть неполной или намеренно искажена для <span class="restricted">██████████████</span>.
+            </p>
+
+        </section>
+
+        <section id="jobs">
+            <h2>Вакансии</h2>
+            <p>Станьте частью нашей команды... если осмелитесь.</p>
+
+            <p><strong>Доступные позиции:</strong></p>
+
+            <ul>
+                <li>
+                    <span class="restricted">Ассистент исследователя</span> - <span class="handwritten">Требования:</span> высшее образование, лояльность, готовность к <span class="restricted">[СЛУЖЕБНЫМ КОМАНДИРОВКАМ]</span>.
+                </li>
+                <li>
+                    <span class="restricted">Техник по обслуживанию оборудования</span> - <span class="handwritten">Требования:</span> опыт работы с <span class="restricted">[ОПАСНЫМИ МАТЕРИАЛАМИ]</span>, ответственность, умение молчать.
+                </li>
+                <li>
+                    <span class="restricted">Охранник периметра</span> - <span class="handwritten">Требования:</span> отличная физическая подготовка, навыки стрельбы, готовность к <span class="restricted">[НЕПРЕДВИДЕННЫМ ОБСТОЯТЕЛЬСТВАМ]</span>.
+                </li>
+            </ul>
+
+            <p>
+                <strong>Внимание!</strong>  При приеме на работу проводится <span class="restricted">тщательная проверка</span> <span class="restricted">[ПРОЦЕДУРА 11-Б]</span>.  Успешное прохождение гарантирует <span class="restricted">карьерный рост</span> <span class="restricted">[И ДРУГИЕ ПРЕИМУЩЕСТВА]</span>.
+            </p>
+
+            <p style="font-size: 0.8em; color: #aaa;">
+                <strong>Примечание:</strong>  SportCorp не несет ответственности за <span class="restricted">[ПОСЛЕДСТВИЯ СОТРУДНИЧЕСТВА]</span>.
+            </p>
+
+        </section>
+
+        <section id="archives">
+            <h2>SPORTCORP – АРХИВЫ</h2>
+            <p class="warning">Доступ ограничен. Несанкционированное прослушивание может привести к непредсказуемым последствиям.</p>
+
+            <div id="login-form" class="login-form">
+                <label for="username">Логин:</label>
+                <input type="text" id="username" name="username" class="login-input">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" class="login-input">
+                <button onclick="loginArchives()" class="login-button">Войти</button>
+                <p id="login-message" style="color: red;"></p>
+            </div>
+
+            <ul id="audio-list" style="display: none;">
+                <li>
+                    <a href="#" onclick="playAudio('rheinhard')">RHEINHARD_S-0X</a>
+                    <audio id="rheinhard" src="rheinhard.wav" controls></audio>
+                </li>
+                <li>
+                    <a href="#" onclick="playAudio('audiolog')">12_audiolog</a>
+                    <audio id="audiolog" src="audiolog.wav" controls></audio>
+                </li>
+                <li>
+                    <a href="#" onclick="playAudio('osiphal')">osiphal</a>
+                    <audio id="osiphal" src="osiphal.wav" controls></audio>
+                </li>
+                 <li>
+                    <a href="#" onclick="playAudio('sphintary')">sphintary</a>
+                    <audio id="sphintary" src="sphintary.wav" controls></audio>
+                </li>
+                 <li>
+                    <a href="#" onclick="playAudio('mimic')">mimic</a>
+                    <audio id="mimic" src="mimic.wav" controls></audio>
+                </li>
+                 <li>
+                    <a href="#" onclick="playAudio('chronos_28')">chronos_28</a>
+                    <audio id="chronos_28" src="chronos_28.wav" controls></audio>
+                </li>
+                 <li>
+                    <a href="#" onclick="playAudio('chronos')">chronos</a>
+                    <audio id="chronos" src="chronos.wav" controls></audio>
+                </li>
+            </ul>
+
+            <p class="handwritten">Записи могут содержать искажения и артефакты. Пожалуйста, проявляйте осторожность. Спортзнак ждёт.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© SportCorp 1985 - <span id="current-year"></span>. Все права изменены. Конфиденциальность строго не гарантируется. Спортзнак всегда рад гостям. Обращайтесь.</p>
+    </footer>
+
+    <script>
+         document.getElementById('current-year').textContent = new Date().getFullYear();
+        const loginForm = document.getElementById('login-form');
+        const audioList = document.getElementById('audio-list');
+        const loginMessage = document.getElementById('login-message');
+        let researchLoggedIn = false;
+
+        function loginArchives() {
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+
+            if (username === 'sportcorp_1985' && password === '1985') {
+                loginForm.style.display = 'none';
+                audioList.style.display = 'block';
+                loginMessage.textContent = '';
+                document.getElementById('archives').classList.add('logged-in');
+            } else {
+                loginMessage.textContent = 'Неверный логин или пароль.';
+                document.getElementById('archives').classList.remove('logged-in');
+                audioList.style.display = 'none';
+
+            }
+        }
+
+        function playAudio(audioId) {
+            const audio = document.getElementById(audioId);
+            if (audio) {
+                audio.play();
+            }
+        }
+
+         function showSection(sectionId) {
+            // Скрыть все секции
+            document.getElementById('about').style.display = 'none';
+
+            const researchSection = document.getElementById('research');
+             researchSection.style.display = 'none'; // Скрываем секцию
+                researchSection.classList.remove('logged-in');
+             const researchLoginForm = document.getElementById('research-login-form');
+            researchLoginForm.style.display='none';
+            const paragraphs = researchSection.querySelectorAll('p, ul');
+            paragraphs.forEach(element => {
+                element.style.display = 'none';
+            });
+
+            document.getElementById('jobs').style.display = 'none';
+            document.getElementById('archives').style.display = 'none'; // Скрываем и секцию "Архивы"
+            loginForm.style.display = 'none';
+            audioList.style.display = 'none';
+
+            // Показать выбранную секцию
+            const sectionToShow = document.getElementById(sectionId);
+            sectionToShow.style.display = 'block';
+
+            // Если открывается секция архивов - показываем форму логина
+             if (sectionId === 'archives') {
+                 loginForm.style.display = 'block';
+             }
+             else if (sectionId === 'research') {
+                 researchLoginForm.style.display = 'block';
+             }
+
+        }
+
+         // Отображаем секцию "О На...с?" при загрузке страницы
+        window.onload = function() {
+            showSection('about');
+        };
+
+         function loginResearch() {
+             const usernameInput = document.getElementById('username-research');
+             const passwordInput = document.getElementById('password-research');
+             const username = usernameInput.value;
+             const password = passwordInput.value;
+             const researchSection = document.getElementById('research');
+             const researchLoginForm = document.getElementById('research-login-form');
+             const researchLoginMessage = document.getElementById('login-message-research');
+
+             if (username === 'sportcorp_1985' && password === '1985') {
+                 researchSection.classList.add('logged-in');
+                 researchLoginMessage.textContent = '';
+                 researchLoginForm.style.display = 'none';
+                 researchLoggedIn = true;
+
+                 const paragraphs = researchSection.querySelectorAll('p, ul');
+                 paragraphs.forEach(element => {
+                     element.style.display = 'block';
+                 });
+
+
+             } else {
+                 researchLoginMessage.textContent = 'Неверный логин или пароль.';
+                 researchSection.classList.remove('logged-in');
+                 researchLoggedIn = false;
+                 const paragraphs = researchSection.querySelectorAll('p, ul');
+                  paragraphs.forEach(element => {
+                      element.style.display = 'none';
+                  });
+             }
+         }
+    </script>
+
+</body>
+</html>
